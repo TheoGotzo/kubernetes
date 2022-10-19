@@ -1,0 +1,32 @@
+---
+version: "3"
+services:
+  mariadb:
+    image: mariadb:10
+    container_name: mariadb
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: juve
+      MARIADB_DATABASE: exo3
+      MARIADB_USER: delpiero
+      MARIADB_PASSWORD: juve
+    ports:
+      - 3306:3306
+    
+  exo3:
+    depends_on:
+      - mariadb
+    image: exo3:latest
+    container_name: exo3
+    ports:
+      - 5000:5000
+    restart: always
+    volumes:
+      - exo3_data:/app
+
+volumes:
+  db_data: {}
+  exo3_data: {}
+...
